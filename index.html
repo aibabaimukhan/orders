@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Заказ подстаканника на дефлектор</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f3f4f6;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      user-select: none; 
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .form-container {
+      background: #ffffff;
+      max-width: 500px;
+      width: 100%;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    h2 { text-align: center; margin-bottom: 5px; font-size: 24px; color: #1f2937; }
+    p.subtitle { text-align: center; font-size: 14px; color: #6b7280; margin-bottom: 15px; }
+    
+    .price-block {
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #059669; 
+      background-color: #ecfdf5; 
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 20px;
+    }
+
+    .input-group { margin-bottom: 15px; }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 16px;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+    textarea { resize: vertical; }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #4b5563;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+    }
+    button:hover { background-color: #059669; }
+    button:disabled { background-color: #9ca3af; cursor: not-allowed; }
+    
+    .btn-secondary { background-color: #3b82f6; }
+    .btn-secondary:hover { background-color: #2563eb; }
+
+    .status-message { text-align: center; margin-top: 15px; font-weight: bold; display: none; }
+    .row { display: flex; gap: 10px; }
+    .row > div { flex: 1; }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Оформление заказа</h2>
+    <p class="subtitle">Подстаканник на дефлектор</p>
+    
+    <div class="price-block">
+      Цена: 10 000 ₸
+    </div>
+
+    <form id="orderForm">
+      <input type="hidden" name="formType" value="order">
+      
+      <div class="input-group">
+        <input type="text" name="fio" placeholder="ФИО (полностью)" required>
+      </div>
+      
+      <div class="row">
+        <div class="input-group"><input type="text" name="country" placeholder="Страна" required></div>
+        <div class="input-group"><input type="text" name="region" placeholder="Область/Край" required></div>
+      </div>
+
+      <div class="row">
+        <div class="input-group"><input type="text" name="city" placeholder="Город" required></div>
+        <div class="input-group"><input type="text" name="zip" placeholder="Почтовый индекс" required></div>
+      </div>
+
+      <div class="input-group">
+        <input type="text" name="address" placeholder="Точный адрес (если курьером)" required>
+      </div>
+
+      <div class="input-group">
+        <input type="text" name="cdek" placeholder="Адрес отделения СДЭК (если доставка СДЭК)">
+      </div>
+
+      <div class="row">
+        <div class="input-group">
+          <select name="car" required>
+            <option value="" disabled selected>Марка машины</option>
+            <option value="ВАЗ 2114-15">ВАЗ 2114-15</option>
+            <option value="ВАЗ 2110">ВАЗ 2110</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <input type="number" name="quantity" id="quantityInput" placeholder="Кол-во шт." min="1" value="1" required>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="phoneInput">Напишите ваш номер телефона</label>
+        <input type="tel" name="phone" id="phoneInput" placeholder="WhatsApp (напр. +7 777 ...)" value="+" required>
+      </div>
+
+      <button type="submit" id="submitBtn">Оставить заявку</button>
+      <p id="orderStatus" class="status-message"></p>
+    </form>
+  </div>
+
+  <div class="form-container">
+    <h2>Чего-то не нашли?</h2>
+    <p class="subtitle">Оставьте заявку на свою модель авто или предложите идею для нового товара.</p>
+    <form id="wishForm">
+      <input type="hidden" name="formType" value="wish">
+      
+      <div class="input-group">
+        <input type="text" name="wishCar" placeholder="На какое авто?" required>
+      </div>
+      <div class="input-group">
+        <textarea name="wishProduct" rows="3" placeholder="Какой еще товар вы бы хотели у нас заказать?" required></textarea>
+      </div>
+
+      <button type="submit" id="wishBtn" class="btn-secondary">Отправить пожелание</button>
+      <p id="wishStatus" class="status-message"></p>
+    </form>
+  </div>
+
+  <script>
+    // === ЗАЩИТА ОТ КОПИРОВАНИЯ И ИНСТРУМЕНТОВ РАЗРАБОТЧИКА ===
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12') e.preventDefault();
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') e.preventDefault();
+      if (e.ctrlKey && e.shiftKey && e.key === 'J') e.preventDefault();
+      if (e.ctrlKey && e.shiftKey && e.key === 'C') e.preventDefault();
+      if (e.ctrlKey && e.key === 'U') e.preventDefault();
+      if (e.ctrlKey && e.key === 'S') e.preventDefault();
+    });
+
+    // === ФИКСАЦИЯ ПЛЮСА В НОМЕРЕ ТЕЛЕФОНА ===
+    const phoneInput = document.getElementById('phoneInput');
+    phoneInput.addEventListener('input', function() {
+      if (this.value[0] !== '+') {
+        this.value = '+' + this.value.replace(/^\+/, '');
+      }
+    });
+
+    // === ЛОГИКА ОТПРАВКИ ФОРМ ===
+    
+    // ВАШ URL СКРИПТА
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbySmLWPQQN6jtvMtelswVlQ-lUE2wjz_DcYHdDhhmB3qVAJN_OVc2SQ_G5fOBJFOWugVg/exec';
+    
+    function setupForm(formId, btnId, statusId) {
+      const form = document.getElementById(formId);
+      const btn = document.getElementById(btnId);
+      const statusMsg = document.getElementById(statusId);
+      const originalBtnText = btn.textContent;
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        btn.disabled = true;
+        btn.textContent = 'Отправка...';
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
+          .then(() => {
+            statusMsg.style.display = 'block';
+            statusMsg.style.color = '#10b981';
+            statusMsg.textContent = 'Успешно отправлено!';
+            form.reset();
+            
+            if(formId === 'orderForm') {
+              phoneInput.value = '+';
+            }
+
+            btn.disabled = false;
+            btn.textContent = originalBtnText;
+            
+            setTimeout(() => { statusMsg.style.display = 'none'; }, 5000);
+          })
+          .catch(error => {
+            statusMsg.style.display = 'block';
+            statusMsg.style.color = '#ef4444';
+            statusMsg.textContent = 'Ошибка отправки. Попробуйте еще раз.';
+            btn.disabled = false;
+            btn.textContent = originalBtnText;
+          });
+      });
+    }
+
+    setupForm('orderForm', 'submitBtn', 'orderStatus');
+    setupForm('wishForm', 'wishBtn', 'wishStatus');
+  </script>
+</body>
+</html>
